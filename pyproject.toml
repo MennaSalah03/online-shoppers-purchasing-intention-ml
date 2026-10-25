@@ -1,0 +1,21 @@
+[project]
+name = "online-shoppers-purchasing-intention-ml"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "mennasalah", email = "menna.skh2003@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.5.4",
+    "pandas>=3.1.0",
+    "scikit-learn>=1.9.1",
+]
+
+[project.scripts]
+online-shoppers-purchasing-intention-ml = "online_shoppers_purchasing_intention_ml:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
