@@ -8,9 +8,12 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi>=0.162.0",
     "numpy>=2.5.4",
     "pandas>=3.1.0",
+    "pydantic-settings>=2.16.2",
     "scikit-learn>=1.9.1",
+    "structlog>=26.1.0",
     "tdqm>=0.0.1",
 ]
 
