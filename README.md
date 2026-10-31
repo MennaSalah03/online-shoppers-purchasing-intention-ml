@@ -22,12 +22,12 @@ For a project, you repository/folder should contain the following:
   - [ ] Training the final model
   - [ ] Saving it to a file (e.g. pickle) or saving it with specialized software (BentoML)
 - [ ] Script predict.py (suggested name)
-  - [ ] Loading the model
-  - [ ] Serving it via a web service (with Flask or specialized software - BentoML, KServe, etc)
-- [ ] Files with dependencies
+  - [x] Loading the model
+- [ ] serve.py 
+  - [ ] Serving model via a web service (with Flask or specialized software - BentoML, KServe, etc)
+- [x] Files with dependencies
   - [x] Pipenv and Pipenv.lock if you use Pipenv or equivalents: conda environment file, requirements.txt or **pyproject.toml**
 - [ ] Dockerfile for running the service
 - [ ] Deployment
   - [ ] URL to the service you deployed or
   - [ ] Video or image of how you interact with the deployed service
-
