@@ -30,6 +30,30 @@ class IntentionPredictionModel(BasePredictionModel):
             # model_artifact consisting of a tuple (dv, model)
             model_artifact = pickle.load(f_in)
 
-            self._dv = model_artifact["dv"]
-            self._model = model_artifact["model"]
+            self._dv, self._model = model_artifact
+            logger.info("model_artifact_loaded_successfully")
         return self
+
+    def _ensure_loaded(self) -> None:
+        if self._dv is None or self._model is None:
+            raise RuntimeError("Model artifact is not loaded. Call `load_model()` before predicting.")
+    @staticmethod
+    def _preprocess_entry(entry: dict) -> dict:
+        cleaned = entry.copy()
+        for col in config.categorical:
+            if col in cleaned:
+                cleaned[col] = str(cleaned[col])
+        for col in config.numerical:
+            if col in cleaned:
+                cleaned[col] = float(cleaned[col])
+        return cleaned
+    def batch_predict(self, entries: list[dict]) -> list[float]:
+        predictions = []
+        for entry in entries:
+            predictions.append(self.predict(entry))
+
+        return predictions
+
+
+        def predict_one(self, entry: dict) -> float:
+            pass        
