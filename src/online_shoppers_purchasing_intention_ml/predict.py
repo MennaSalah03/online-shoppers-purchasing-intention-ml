@@ -37,8 +37,9 @@ class IntentionPredictionModel(BasePredictionModel):
     def _ensure_loaded(self) -> None:
         if self._dv is None or self._model is None:
             raise RuntimeError("Model artifact is not loaded. Call `load_model()` before predicting.")
+        
     @staticmethod
-    def _preprocess_entry(entry: dict) -> dict:
+    def _preprocess_entry( entry: dict) -> dict:
         cleaned = entry.copy()
         for col in config.categorical:
             if col in cleaned:
@@ -47,13 +48,19 @@ class IntentionPredictionModel(BasePredictionModel):
             if col in cleaned:
                 cleaned[col] = float(cleaned[col])
         return cleaned
+
     def batch_predict(self, entries: list[dict]) -> list[float]:
+        self._ensure_loaded()
+        if not entries:
+            return []
         predictions = []
-        for entry in entries:
-            predictions.append(self.predict(entry))
+
+        cleaned_entries = [self._preprocess_entry(e) for e in entries]
+        X = self._dv.transform(cleaned_entries)
+        predictions = self._model.predict_proba(X)[:, 1]
 
         return predictions
 
 
-        def predict_one(self, entry: dict) -> float:
-            pass        
+    def predict_one(self, entry: dict) -> float:
+        return self.batch_predict([entry])[0]        

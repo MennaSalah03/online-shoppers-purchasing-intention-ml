@@ -4,12 +4,29 @@ from pydantic import BaseModel
 
 from online_shoppers_purchasing_intention_ml.predict import IntentionPredictionModel
 
+logger = structlog.get_logger()
+
 app = FastAPI()
 
 
 class Entry(BaseModel):
-    pass
-
+    administrative: float
+    administrative_duration: float
+    informational: float
+    informational_duration: float
+    productrelated:float
+    productrelated_duration: float
+    bouncerates: float
+    exitrates: float
+    pagevalues: float
+    specialday: int
+    month: str
+    operatingsystems: int
+    browser: int
+    region: int
+    traffictype: int
+    visitortype: str
+    weekend: int
 
 def load_predictor():
     pass
