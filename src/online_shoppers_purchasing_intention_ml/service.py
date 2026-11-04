@@ -10,6 +10,7 @@ app = FastAPI()
 
 
 class Entry(BaseModel):
+<<<<<<< HEAD
     administrative: float
     administrative_duration: float
     informational: float
@@ -27,6 +28,8 @@ class Entry(BaseModel):
     traffictype: int
     visitortype: str
     weekend: int
+    pass
+
 
 def load_predictor():
     pass

@@ -37,7 +37,7 @@ class IntentionPredictionModel(BasePredictionModel):
     def _ensure_loaded(self) -> None:
         if self._dv is None or self._model is None:
             raise RuntimeError("Model artifact is not loaded. Call `load_model()` before predicting.")
-        
+                
     @staticmethod
     def _preprocess_entry( entry: dict) -> dict:
         cleaned = entry.copy()
