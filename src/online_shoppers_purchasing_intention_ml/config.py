@@ -6,15 +6,18 @@ class Settings(BaseSettings):
        "configs"
        seed: int = 42
        data_path: str = "data/online_shoppers_intention.csv"
-       model_path = "models/shopper_intention_model_C=1.bin"
+       
+       best_random_forest_model: str = "models/train_script_rf_d=10_s=10_n=40.pkl"
+       n: int = 40
+       d: int = 10
+       s: int = 10
+       
 
-       # data colums
-       categorical: list[str] = ['visitortype', 'month']
+       categorical: list[str] = ['visitortype', 'month', 'browser', 'region', 'traffictype', 'weekend']
        numerical: list[str] = ['administrative', 'administrative_duration', 'informational',
               'informational_duration', 'productrelated', 'productrelated_duration',
-              'bouncerates', 'exitrates', 'pagevalues', 'specialday',
-              'operatingsystems', 'browser', 'region', 'traffictype', 'weekend'
-       ]
+              'bouncerates', 'exitrates', 'pagevalues', 'specialday', 'operatingsystems'
+              ]
        target: str = "revenue"
-
+       
 config = Settings()
