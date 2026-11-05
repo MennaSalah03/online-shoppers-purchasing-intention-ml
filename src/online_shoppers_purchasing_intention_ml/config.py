@@ -4,6 +4,8 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
        "configs"
+       api_url: str = "http://0.0.0.0:8000"
+       
        seed: int = 42
        data_path: str = "data/online_shoppers_intention.csv"
        
@@ -19,5 +21,5 @@ class Settings(BaseSettings):
               'bouncerates', 'exitrates', 'pagevalues', 'specialday', 'operatingsystems'
               ]
        target: str = "revenue"
-       
+
 config = Settings()
