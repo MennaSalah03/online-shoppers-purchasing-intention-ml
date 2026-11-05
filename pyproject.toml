@@ -8,13 +8,13 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi>=0.162.0",
-    "numpy>=2.5.4",
-    "pandas>=3.1.0",
+    "pandas",
+    "pydantic",
     "pydantic-settings>=2.16.2",
     "scikit-learn>=1.9.1",
-    "structlog>=26.1.0",
-    "tdqm>=0.0.1",
+    "structlog",
+    "fastapi",
+    "uvicorn>=0.54.0",
 ]
 
 [project.scripts]
@@ -26,9 +26,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
-<<<<<<< HEAD
-    "seaborn>=0.13.2",
-=======
-    "xgboost>=3.4.1",
->>>>>>> aa5a10d (modified prediction)
+    "requests>=2.34.2",
+    "uvicorn>=0.54.0",
+    "xgboost",
 ]
