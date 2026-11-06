@@ -34,7 +34,7 @@ def test_raw_single_prediction():
         "region": 3,
         "traffictype": 1,
         "visitortype": "Returning_Visitor",
-        "weekend": 0,
+        "weekend": 0
     }
 
     response = requests.post(f"{config.api_url}/predict", json=raw_entry, timeout=5)
@@ -42,26 +42,37 @@ def test_raw_single_prediction():
     logger.info("raw_single_prediction_result", result=response.json())
 
 
+def test_endpoints_from_dataset():
+    logger.info("loading_test_data", path=config.data_path)
+    df = load_data(config.data_path)
+    _, X_test, _, y_test = split_data(df)
 
+    single_record = json.loads(X_test.iloc[0].to_json())
+    
+    batch_records = json.loads(X_test.iloc[100:110].to_json(orient="records"))
+    batch_actual_labels = y_test[100:110].tolist()
+
+    logger.info("testing_single_predict")
+    resp_single = requests.post(f"{config.api_url}/predict", json=single_record)
+    resp_single.raise_for_status()
+    
+    logger.info("single_predict_success", response=resp_single.json())
+
+    logger.info("testing_batch_predict", batch_size=len(batch_records))
+    resp_batch = requests.post(f"{config.api_url}/predict/batch", json=batch_records)
+    resp_batch.raise_for_status()
+    
+    logger.info(
+        "batch_predict_success", 
+        predictions=resp_batch.json(), 
+        actual_labels=batch_actual_labels
+    )
 if __name__ == "__main__":
     # /health endpoint test
     test_health_endpoint()
 
+    # /predict test with raw data
+    test_raw_single_prediction()
+
     # /predict and /predict batch testing from test dataset
-    df = load_data(config.data_path)
-    _, X_test, _, y_test = split_data(df)
-
-    # the test entries
-    entry = X_test.iloc[0].to_json(indent=2)
-    record = json.loads(entry)
-    
-    records = []
-    for i in range(100, 110):
-        records.append(json.loads(X_test.iloc[i].to_json(indent=2)))
-
-    resp_single = requests.post(f"{config.api_url}/predict", json=record)
-    print("Single:", resp_single.json())
-
-    resp_batch = requests.post(f"{config.api_url}/predict/batch", json=records)
-    print("Batch:", resp_batch.json())
-    print(y_test[100:110])
+    test_endpoints_from_dataset()
